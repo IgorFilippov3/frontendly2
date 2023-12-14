@@ -1,7 +1,6 @@
 .page-title {
   color: #ebc805;
-  font-family: "Open Sans", sans-serif;
-  font-size: 24px;
+  font-size: 20px;
   cursor: pointer;
 }
 
@@ -12,7 +11,6 @@
 
 .dropdown-list li {
   color: #ebc805;
-  font-family: "Open Sans", sans-serif;
 }
 
 .dropdown-list li:hover {
