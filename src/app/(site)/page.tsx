@@ -8,12 +8,21 @@ export const metadata: Metadata = {
 }
 
 export default async function SiteMain() {
-  const response = await fetch(process.env.URL + '/api/tutorial/lessons');
-  const lessons: Lesson[] = await response.json();
-
-  return (
-    <main>
-      <LessonsList lessons={lessons} />
-    </main>
-  );
+  try {
+    const response = await fetch(process.env.URL + '/api/tutorial/lessons');
+    const lessons: Lesson[] = await response.json();
+    console.log(lessons, 'lessons');
+    return (
+      <main>
+        <LessonsList lessons={lessons} />
+      </main>
+    );
+  } catch (e: any) {
+    return (
+      <main>
+        <span>Error</span>
+        <span>{e.message}</span>
+      </main>
+    )
+  }
 }
