@@ -53,6 +53,7 @@
 
 .task-content pre {
   white-space-collapse: collapse !important;
+  margin-bottom: 20px !important;
 }
 
 .task-content ul,
@@ -71,4 +72,25 @@
   display: block;
   margin: 0 auto;
   max-width: 600px;
+}
+
+.task-bottom {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.task-button {
+  padding: 8px 18px;
+  font-size: 20px;
+  color: #ffffff;
+  background-color: #4eb543;
+  border: 1px solid #4eb543;
+  border-radius: 4px;
+  transition: all 250ms ease-in-out;
+  cursor: pointer;
+}
+
+.task-button:hover {
+  background-color: #57c74b;
+  border: 1px solid #57c74b;
 }

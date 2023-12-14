@@ -22,6 +22,24 @@ export const Task = ({ task, partName }: TaskProps) => {
     'hidden': !ctx?.isTaskOpen
   });
 
+  const defineNextButton = () => {
+    return ctx?.isLastPart()
+      ? (
+        <button
+          className="task-button"
+          onClick={ctx?.navigateToLessonsList}>
+          Finish
+        </button>
+      )
+      : (
+        <button
+          className="task-button"
+          onClick={ctx?.navigateToNextPart}>
+          Next
+        </button>
+      );
+  }
+
   return (
     <div className={className}>
       <div className="task-name">{partName}</div>
@@ -29,6 +47,7 @@ export const Task = ({ task, partName }: TaskProps) => {
         className="task-content"
         dangerouslySetInnerHTML={{ __html: task }}>
       </div>
+      <div className="task-bottom">{defineNextButton()}</div>
     </div>
   );
 };
