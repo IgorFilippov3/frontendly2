@@ -9,9 +9,10 @@ export const metadata: Metadata = {
 
 export default async function SiteMain() {
   try {
-    const response = await fetch(process.env.URL + '/api/tutorial/lessons');
+    const response = await fetch(process.env.URL + '/api/tutorial/lessons', {
+      cache: 'no-cache',
+    });
     const lessons: Lesson[] = await response.json();
-    console.log(lessons, 'lessons');
     return (
       <main>
         <LessonsList lessons={lessons} />

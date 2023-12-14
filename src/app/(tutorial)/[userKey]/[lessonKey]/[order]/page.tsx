@@ -28,7 +28,8 @@ export default async function PartPage({ params }: PartPageProps) {
       body: JSON.stringify({ lessonKey, partOrder: order }),
       headers: {
         'Content-Type': 'application/json',
-      }
+      },
+      cache: 'no-cache',
     });
 
     const data: LessonPartData = await res.json();
