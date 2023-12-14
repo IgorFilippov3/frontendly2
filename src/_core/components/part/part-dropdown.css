@@ -1,0 +1,20 @@
+.page-title {
+  color: #ebc805;
+  font-family: "Open Sans", sans-serif;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.dropdown-list {
+  min-width: 300px;
+  background-color: hsl(220 10% 20%);
+}
+
+.dropdown-list li {
+  color: #ebc805;
+  font-family: "Open Sans", sans-serif;
+}
+
+.dropdown-list li:hover {
+  background-color: hsl(223, 10%, 28%);
+}

@@ -1,0 +1,106 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int       @id @default(autoincrement())
+  name          String
+  key           String?
+  email         String    @unique
+  emailVerified DateTime? @map("email_verified")
+  password      String
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  role          UserRole  @default(user)
+  lessons       Lesson[]
+
+  @@map("users")
+}
+
+enum UserRole {
+  user
+  admin
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model Lesson {
+  id          Int               @id @default(autoincrement())
+  name        String
+  key         String
+  published   Boolean           @default(false)
+  posterImage String?
+  contentType LessonContentType
+  accessType  AccessType        @default(free)
+  createdAt   DateTime          @default(now()) @map("created_at")
+  updatedAt   DateTime          @updatedAt @map("updated_at")
+  user        User?             @relation(fields: [userId], references: [id])
+  userId      Int?
+  parts       Part[]
+
+  @@map("lessons")
+}
+
+enum LessonContentType {
+  html
+  css
+  javascript
+  reactjs
+  reactts
+  angular
+}
+
+enum AccessType {
+  free
+  paid
+}
+
+model Part {
+  id           Int      @id @default(autoincrement())
+  name         String
+  order        Int
+  taskHtml     String?
+  taskMarkdown String?
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+  lesson       Lesson?  @relation(fields: [lessonId], references: [id])
+  lessonId     Int?
+  files        File[]
+
+  @@map("parts")
+}
+
+model File {
+  id        Int      @id @default(autoincrement())
+  name      String
+  type      FileType
+  code      String?
+  path      String   @default("/")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  part      Part     @relation(fields: [partId], references: [id])
+  partId    Int
+
+  @@map("files")
+}
+
+enum FileType {
+  html
+  css
+  javascript
+}

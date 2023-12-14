@@ -1,0 +1,31 @@
+.card {
+  width: 400px;
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  text-decoration: none;
+  overflow: hidden;
+  color: rgb(36 24 91);
+  margin-top: 24px;
+}
+
+.content {
+  height: 100%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.author {
+  margin-top: auto;
+  font-size: 16px;
+}

@@ -1,0 +1,29 @@
+.part {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.editor {
+  width: 100%;
+  height: 100%;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.files {
+  display: flex;
+  flex-direction: column;
+  margin-top: 24px;
+}
+
+.filesControls {
+  display: flex;
+  justify-content: flex-end;
+}

@@ -1,0 +1,37 @@
+.custom-layout {
+  height: calc(100vh - 40px);
+  border-radius: 0 !important;
+}
+
+.custom-tabs {
+  background-color: #151515 !important;
+  border-bottom: 1px solid #151515 !important;
+}
+
+.custom-tab {
+  font-size: 16px !important;
+  font-family: var(--font-base) !important;
+}
+
+.custom-navigator {
+  background-color: #151515 !important;
+  border-bottom: 1px solid #151515 !important;
+}
+
+.next-button {
+  padding: 8px 18px;
+  font-size: 20px;
+  color: #ffffff;
+  background-color: #4eb543;
+  border: 1px solid #4eb543;
+  border-radius: 4px;
+  transition: all 250ms ease-in-out;
+  position: relative;
+  top: -40px;
+  cursor: pointer;
+}
+
+.next-button:hover {
+  background-color: #57c74b;
+  border: 1px solid #57c74b;
+}

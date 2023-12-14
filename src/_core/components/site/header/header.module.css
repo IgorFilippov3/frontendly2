@@ -1,0 +1,62 @@
+.header {
+  width: 100%;
+  height: 60px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 100;
+}
+
+.content {
+  max-width: 1280px;
+  height: inherit;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 32px;
+  font-weight: 600;
+  color: rgb(36 24 91);
+  text-decoration: none;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+}
+
+.login {
+  font-size: 18px;
+  color: rgb(36 24 91);
+  text-decoration: none;
+  margin-right: 24px;
+  padding: 12px;
+  border-radius: 10px;
+  transition: all 250ms ease-in-out;
+}
+
+.register {
+  text-decoration: none;
+  font-size: 18px;
+  background-color: #ffffff;
+  color: rgb(36 24 91);
+  border: 1px solid rgb(36 24 91);
+  padding: 12px;
+  border-radius: 10px;
+  transition: all 250ms ease-in-out;
+  cursor: pointer;
+}
+
+.register:hover {
+  background-color: rgb(36 24 91);
+  border: 1px solid #ffffff;
+  color: #ffffff;
+}
+
+.login:hover {
+  background-color: rgba(219, 216, 216, 0.5);
+}
