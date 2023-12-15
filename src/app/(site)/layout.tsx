@@ -20,6 +20,9 @@ export default async function SiteLayout({ children }: SiteLayoutProps) {
 
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+      </head>
       <body>
         <SessionProvider session={session}>
           <Header />
