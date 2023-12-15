@@ -1,24 +1,22 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import './task.css';
 import '../../utils/prism/prism.css';
 import classNames from 'classnames';
-import { PartContextType, usePart } from '../part/part-provider';
-import { useSelector } from 'react-redux';
 import { useAppSelector } from '../part/state/hooks';
+import { useRouter } from 'next/navigation';
 
-
-declare var Prism: any;
 
 export interface TaskProps {
   task: string;
   partName: string;
   isLastPart: boolean;
-  nextPartUrl: string;
+  nextUrl: string;
 }
 
-export const Task = ({ task, partName }: TaskProps) => {
+export const Task = ({ task, partName, isLastPart, nextUrl }: TaskProps) => {
+  const router = useRouter();
   const open: boolean = useAppSelector(state => state.taskOpen.value);
 
   const className = classNames({
@@ -26,20 +24,10 @@ export const Task = ({ task, partName }: TaskProps) => {
     'hidden': !open,
   });
 
-  // const defineNextButton = () => {
-  //   return ctx?.isLastPart()
-  //     ? (
-  //       <button
-  //         className="task-button"
-  //         onClick={ctx?.navigateToLessonsList}>
-  //         Finish
-  //       </button>
-  //     )
-  //     : (
+  const navigateNext = (url: string) => {
+    router.push(url);
+  }
   
-  //     );
-  // }
-
   return (
     <div className={className}>
       <div className="task-name">{partName}</div>
@@ -48,7 +36,11 @@ export const Task = ({ task, partName }: TaskProps) => {
         dangerouslySetInnerHTML={{ __html: task }}>
       </div>
       <div className="task-bottom">
-        {/* {defineNextButton()} */}
+        <button
+          className="task-button"
+          onClick={() => navigateNext(nextUrl)}>
+          {isLastPart ? 'Finish' : 'Next'}
+        </button>
       </div>
     </div>
   );

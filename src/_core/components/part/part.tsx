@@ -9,16 +9,18 @@ import { Provider } from 'react-redux'
 import { store } from './state/store';
 import { Part } from '@/_core/models/part/part.model';
 import { PartShortInfo } from '@/_core/models/part/part-short-info.model';
-import { Lesson } from '@/_core/models/lesson/lesson.model';
 
 export interface LessonPartProps {
   data: LessonPartData
+  userKey: string;
 }
 
-export const LessonPart = ({ data }: LessonPartProps) => {
+export const LessonPart = ({ data, userKey }: LessonPartProps) => {
   const { lesson, part, files } = data;
-  const isLastPart: boolean = getIsLastPart(part, lesson.parts);
-  const nextPartUrl: string = getNextPartUrl(part, lesson);
+  
+  const nextPart: PartShortInfo | undefined = getNextPart(part, lesson.parts!);
+  const nextUrl: string = getNextUrl(nextPart, lesson.key, userKey);
+  const isLastPart: boolean = typeof nextPart === 'undefined';
 
   return (
     <div className="part" style={{ overflow: 'hidden' }}>
@@ -27,7 +29,7 @@ export const LessonPart = ({ data }: LessonPartProps) => {
         <Task 
           task={part.taskHtml} 
           partName={part.name} 
-          nextPartUrl={nextPartUrl} 
+          nextUrl={nextUrl}
           isLastPart={isLastPart} 
         />
         <Sandbox files={files} />
@@ -36,24 +38,13 @@ export const LessonPart = ({ data }: LessonPartProps) => {
   );
 };
 
-const getIsLastPart = (currentPart: Part, shortInfo: PartShortInfo[] | undefined) => {
-  if (!shortInfo) return true;
-  const last: PartShortInfo = shortInfo.slice(-1)[0];
-  return currentPart.id === last.id;
+const getNextPart = (currentPart: Part, shortInfo: PartShortInfo[]): PartShortInfo | undefined => {
+  return shortInfo
+    .find((si: PartShortInfo) => si.order > currentPart.order);
 }
 
-const getNextPartUrl = (currentPart: Part, lesson: Lesson) => {
-  const nextPart = findNextPart(currentPart, lesson.parts);
-  return `/lesson/${lesson.id}/${nextPart.id}`;
-}
+const getNextUrl = (nextPart: PartShortInfo | undefined, lessonKey: string, userKey: string): string => {
+  if (typeof nextPart === 'undefined') return '/';
 
-const findNextPart = (currentPart: Part, parts: PartShortInfo[] | undefined) => {
-  if (!parts) return currentPart;
-
-  for (let p of parts) {
-    if (p.order > currentPart.order) {
-      return p;
-    }
-  }
-  return currentPart;
+  return `/${userKey}/${lessonKey}/${nextPart.order}`;
 }

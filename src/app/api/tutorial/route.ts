@@ -9,6 +9,9 @@ export async function POST(req: Request) {
       where: { key: lessonKey },
       include: {
         parts: {
+          orderBy: {
+            order: 'asc'
+          },
           select: {
             id: true,
             order: true,

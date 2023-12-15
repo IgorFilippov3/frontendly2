@@ -34,7 +34,7 @@ export default async function PartPage({ params }: PartPageProps) {
 
     const data: LessonPartData = await res.json();
 
-    return <LessonPart data={data} />;
+    return <LessonPart data={data} userKey={userKey} />;
 
   } catch (e: any) {
     return <span>{e.message}</span>

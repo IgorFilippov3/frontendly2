@@ -53,7 +53,7 @@ export const Sandbox = ({ files }: SandboxProps) => {
       theme="dark"
       options={{
         recompileMode: "delayed",
-        recompileDelay: 300,
+        recompileDelay: 600,
         classes: {
           "sp-wrapper": "custom-wrapper",
           "sp-layout": "custom-layout",
