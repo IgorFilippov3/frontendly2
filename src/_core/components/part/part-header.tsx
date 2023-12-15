@@ -8,12 +8,14 @@ import { useRouter } from 'next/navigation';
 import { PartDropdown } from './part-dropdown';
 import { toggle } from './state/task-open.slice';
 import { useAppDispatch } from './state/hooks';
+import { PartShortInfo } from '@/_core/models/part/part-short-info.model';
 
 interface PartHeaderProps {
   name: string;
+  parts: PartShortInfo[];
 }
 
-export const PartHeader = ({ name }: PartHeaderProps) => {
+export const PartHeader = ({ name, parts }: PartHeaderProps) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -39,7 +41,7 @@ export const PartHeader = ({ name }: PartHeaderProps) => {
           <MenuBookIcon sx={{ fontSize: 28 }} />
         </button>
       </div>
-      <PartDropdown name={name} />
+      <PartDropdown name={name} parts={parts} />
     </header>
   );
 };

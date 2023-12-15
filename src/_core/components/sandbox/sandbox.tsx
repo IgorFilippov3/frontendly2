@@ -7,15 +7,17 @@ import { MonacoEditor } from '../monaco-editor';
 // import { SandpackFileExplorer } from 'sandpack-file-explorer';
 import './sandbox.css';
 import { File } from '@/_core/models/file/file.model';
-import { PartShortInfo } from '@/_core/models/part/part-short-info.model';
-import { Part } from '@/_core/models/part/part.model';
-import { PartContextType, usePart } from '../part/part-provider';
+import { useRouter } from 'next/navigation';
 
 interface SandboxProps {
   files: File[] | undefined;
+  isLastPart: boolean;
+  nextUrl: string;
 }
 
-export const Sandbox = ({ files }: SandboxProps) => {
+export const Sandbox = ({ files, isLastPart, nextUrl }: SandboxProps) => {
+  const router = useRouter();
+
   if (!files) return <span></span>;
 
   const getSandpackFileTree = (files: File[]) => {
@@ -28,23 +30,9 @@ export const Sandbox = ({ files }: SandboxProps) => {
     return tree;
   }
 
-  // const defineNextButton = () => {
-  //   return ctx?.isLastPart()
-  //     ? (
-  //       <button
-  //         className="next-button"
-  //         onClick={ctx?.navigateToLessonsList}>
-  //         Finish
-  //       </button>
-  //     )
-  //     : (
-  //       <button
-  //         className="next-button"
-  //         onClick={ctx?.navigateToNextPart}>
-  //         Next
-  //       </button>
-  //     );
-  // }
+  const navigateNext = (url: string) => {
+    router.push(url);
+  }
 
   return (
     <SandpackProvider
@@ -69,7 +57,13 @@ export const Sandbox = ({ files }: SandboxProps) => {
           style={{ height: "100vh" }}
           showNavigator={true}
           showOpenInCodeSandbox={false}
-          // actionsChildren={defineNextButton()}
+          actionsChildren={
+            <button
+              className="next-button"
+              onClick={() => navigateNext(nextUrl)}>
+              {isLastPart ? 'Finish' : 'Next'}
+            </button>
+          }
         />
       </SandpackLayout>
     </SandpackProvider>

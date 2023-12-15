@@ -25,14 +25,14 @@ export const LessonPart = ({ data, userKey }: LessonPartProps) => {
   return (
     <div className="part" style={{ overflow: 'hidden' }}>
       <Provider store={store}>
-        <PartHeader name={lesson.name} />
+        <PartHeader name={lesson.name} parts={lesson.parts!} />
         <Task 
           task={part.taskHtml} 
           partName={part.name} 
           nextUrl={nextUrl}
           isLastPart={isLastPart} 
         />
-        <Sandbox files={files} />
+        <Sandbox files={files} nextUrl={nextUrl} isLastPart={isLastPart} />
       </Provider>
     </div>
   );

@@ -1,14 +1,19 @@
+'use client';
 
 import './part-dropdown.css';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
-import { PartContextType, usePart } from './part-provider';
 import { PartShortInfo } from '@/_core/models/part/part-short-info.model';
+import { useRouter } from 'next/navigation';
 
-export const PartDropdown = ({ name }: { name: string }) => {
-  const ctx: PartContextType | null = usePart();
+interface PartDropdownProps {
+  name: string;
+  parts: PartShortInfo[];
+}
 
+export const PartDropdown = ({ name, parts }: PartDropdownProps) => {
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -20,14 +25,16 @@ export const PartDropdown = ({ name }: { name: string }) => {
     setAnchorEl(null);
   };
 
-  const navigate = (id: number) => {
-    ctx?.navigateToPart(id);
+  const navigate = (order: number) => {
+    const { pathname } = window.location;
+    const url = pathname.split('/').slice(0, 3).join('/');
+    router.push(`${url}/${order}`);
   }
 
   const renderMenuItems = (parts: PartShortInfo[]) => {
     return parts.map(p => {
       return (
-        <MenuItem key={p.id} onClick={() => navigate(p.id)}>{p.name}</MenuItem>
+        <MenuItem key={p.id} onClick={() => navigate(p.order)}>{p.name}</MenuItem>
       );
     })
   }
@@ -49,7 +56,7 @@ export const PartDropdown = ({ name }: { name: string }) => {
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}>
-        {/* {renderMenuItems(ctx?.parts!)} */}
+        {renderMenuItems(parts)}
       </Menu>
     </div>
   );
