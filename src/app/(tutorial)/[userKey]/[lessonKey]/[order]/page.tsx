@@ -29,7 +29,7 @@ export default async function PartPage({ params }: PartPageProps) {
       headers: {
         'Content-Type': 'application/json',
       },
-      cache: 'no-cache',
+      cache: 'no-store',
     });
 
     const data: LessonPartData = await res.json();

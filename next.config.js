@@ -17,6 +17,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'frontendly.s3.eu-central-1.amazonaws.com',
+      },
     ],
   },
 }
