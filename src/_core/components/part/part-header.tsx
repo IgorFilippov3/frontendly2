@@ -2,22 +2,23 @@
 
 import React from 'react';
 import './part-header.css';
-import { PartContextType, usePart } from './part-provider';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import HomeIcon from '@mui/icons-material/Home';
 import { useRouter } from 'next/navigation';
 import { PartDropdown } from './part-dropdown';
+import { toggle } from './state/task-open.slice';
+import { useAppDispatch } from './state/hooks';
 
 interface PartHeaderProps {
   name: string;
 }
 
 export const PartHeader = ({ name }: PartHeaderProps) => {
-  const router = useRouter()
-  const ctx: PartContextType | null = usePart();
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const toggleTask = () => {
-    ctx?.toggleTaskOpen();
+    dispatch(toggle());
   }
 
   const navigateToMain = () => {

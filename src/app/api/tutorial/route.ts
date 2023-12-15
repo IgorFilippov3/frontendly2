@@ -6,7 +6,16 @@ export async function POST(req: Request) {
 
   try {
     const lesson: Lesson | null = await prisma.lesson.findFirst({
-      where: { key: lessonKey }
+      where: { key: lessonKey },
+      include: {
+        parts: {
+          select: {
+            id: true,
+            order: true,
+            name: true,
+          }
+        }
+      }
     });
 
     if (!lesson) {

@@ -16,8 +16,6 @@ interface SandboxProps {
 }
 
 export const Sandbox = ({ files }: SandboxProps) => {
-  const ctx: PartContextType | null = usePart();
-
   if (!files) return <span></span>;
 
   const getSandpackFileTree = (files: File[]) => {
@@ -30,23 +28,23 @@ export const Sandbox = ({ files }: SandboxProps) => {
     return tree;
   }
 
-  const defineNextButton = () => {
-    return ctx?.isLastPart()
-      ? (
-        <button
-          className="next-button"
-          onClick={ctx?.navigateToLessonsList}>
-          Finish
-        </button>
-      )
-      : (
-        <button
-          className="next-button"
-          onClick={ctx?.navigateToNextPart}>
-          Next
-        </button>
-      );
-  }
+  // const defineNextButton = () => {
+  //   return ctx?.isLastPart()
+  //     ? (
+  //       <button
+  //         className="next-button"
+  //         onClick={ctx?.navigateToLessonsList}>
+  //         Finish
+  //       </button>
+  //     )
+  //     : (
+  //       <button
+  //         className="next-button"
+  //         onClick={ctx?.navigateToNextPart}>
+  //         Next
+  //       </button>
+  //     );
+  // }
 
   return (
     <SandpackProvider
@@ -71,7 +69,7 @@ export const Sandbox = ({ files }: SandboxProps) => {
           style={{ height: "100vh" }}
           showNavigator={true}
           showOpenInCodeSandbox={false}
-          actionsChildren={defineNextButton()}
+          // actionsChildren={defineNextButton()}
         />
       </SandpackLayout>
     </SandpackProvider>

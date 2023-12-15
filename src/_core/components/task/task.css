@@ -36,7 +36,7 @@
 .task-content p {
   color: rgb(51, 51, 51);
   font-size: 20px;
-  line-height: 28px;
+  line-height: 32px;
   margin-bottom: 20px;
 }
 
@@ -44,11 +44,12 @@
   color: #49a8e4;
 }
 
-.task-content code.code {
+.task-content p code {
   color: rgb(51, 51, 51);
-  background-color: gainsboro;
+  background-color: rgba(153, 161, 179, 0.1);
   padding: 1px 4px;
   border-radius: 6px;
+  font-family: "Inter", sans-serif;
 }
 
 .task-content pre {
@@ -87,6 +88,7 @@
   border: 1px solid #4eb543;
   border-radius: 4px;
   transition: all 250ms ease-in-out;
+  top: 0;
   cursor: pointer;
 }
 
