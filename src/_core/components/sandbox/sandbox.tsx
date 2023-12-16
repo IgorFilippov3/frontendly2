@@ -1,22 +1,23 @@
 'use client';
 
 import React from 'react';
-import { SandpackLayout, SandpackPreview, SandpackProvider, SandpackFileExplorer } from '@codesandbox/sandpack-react';
+import { SandpackLayout, SandpackPreview, SandpackProvider, SandpackFileExplorer, SandpackPredefinedTemplate } from '@codesandbox/sandpack-react';
 import { MonacoEditor } from '../monaco-editor';
 //@ts-ignore
 // import { SandpackFileExplorer } from 'sandpack-file-explorer';
 import './sandbox.css';
 import { File } from '@/_core/models/file/file.model';
 import { useRouter } from 'next/navigation';
-import { monokaiPro } from "@codesandbox/sandpack-themes";
+import { LessonContentType } from '@/_core/models/lesson/lesson-content-type.model';
 
 interface SandboxProps {
+  contentType: LessonContentType;
   files: File[] | undefined;
   isLastPart: boolean;
   nextUrl: string;
 }
 
-export const Sandbox = ({ files, isLastPart, nextUrl }: SandboxProps) => {
+export const Sandbox = ({ contentType, files, isLastPart, nextUrl }: SandboxProps) => {
   const router = useRouter();
 
   if (!files) return <span></span>;
@@ -25,10 +26,30 @@ export const Sandbox = ({ files, isLastPart, nextUrl }: SandboxProps) => {
     const tree: Record<string, string> = {};
 
     for (let file of files) {
-      tree['/' + file.name] = file.code;
+      tree['/' + file.name] = file.code || '';
     }
 
     return tree;
+  }
+
+  const getTemplate = (contentType: LessonContentType): SandpackPredefinedTemplate => {
+    switch (contentType) {
+      case LessonContentType.html:
+      case LessonContentType.css:
+        return 'static';
+      case LessonContentType.javascript:
+        return 'vanilla';
+      case LessonContentType.typescript:
+        return 'vanilla-ts';
+      case LessonContentType.reactjs:
+        return 'react';
+      case LessonContentType.reactts:
+        return 'react-ts';
+      case LessonContentType.angular:
+        return 'angular';
+      default:
+        throw new Error('Invalid lesson content type');        
+    }
   }
 
   const navigateNext = (url: string) => {
@@ -38,7 +59,7 @@ export const Sandbox = ({ files, isLastPart, nextUrl }: SandboxProps) => {
   return (
     <SandpackProvider
       files={getSandpackFileTree(files)}
-      template="react"
+      template={getTemplate(contentType)}
       theme="dark"
       options={{
         recompileMode: "delayed",

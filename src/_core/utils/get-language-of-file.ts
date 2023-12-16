@@ -2,8 +2,6 @@ export const getLanguageOfFile = (filePath: string) => {
   const extensionDotIndex = filePath.lastIndexOf(".");
   const extension = filePath.slice(extensionDotIndex + 1);
 
-  console.log(extension, 'ext');
-
   switch (extension) {
     case "js":
     case "jsx":

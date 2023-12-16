@@ -17,7 +17,7 @@ export interface LessonPartProps {
 
 export const LessonPart = ({ data, userKey }: LessonPartProps) => {
   const { lesson, part, files } = data;
-  
+
   const nextPart: PartShortInfo | undefined = getNextPart(part, lesson.parts!);
   const nextUrl: string = getNextUrl(nextPart, lesson.key, userKey);
   const isLastPart: boolean = typeof nextPart === 'undefined';
@@ -26,13 +26,18 @@ export const LessonPart = ({ data, userKey }: LessonPartProps) => {
     <div className="part" style={{ overflow: 'hidden' }}>
       <Provider store={store}>
         <PartHeader name={lesson.name} parts={lesson.parts!} />
-        <Task 
-          task={part.taskHtml} 
-          partName={part.name} 
+        <Task
+          task={part.taskHtml}
+          partName={part.name}
           nextUrl={nextUrl}
-          isLastPart={isLastPart} 
+          isLastPart={isLastPart}
         />
-        <Sandbox files={files} nextUrl={nextUrl} isLastPart={isLastPart} />
+        <Sandbox
+          contentType={lesson.contentType}
+          files={files}
+          nextUrl={nextUrl}
+          isLastPart={isLastPart}
+        />
       </Provider>
     </div>
   );

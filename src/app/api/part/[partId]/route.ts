@@ -59,3 +59,20 @@ export async function PUT(
     return Response.json(e.message, { status: 400 });
   }
 }
+
+export async function DELETE(
+  _: Request,
+  { params }: { params: { partId: string } }
+) {
+  try {
+    await prisma.part.delete({
+      where: {
+        id: parseInt(params.partId)
+      }
+    });
+
+    return Response.json({});
+  } catch (e: any) {
+    return Response.json(e.message, { status: 400 });
+  }
+}

@@ -1,5 +1,8 @@
+//@ts-ignore
 import { Registry } from 'monaco-textmate';
+//@ts-ignore
 import { wireTmGrammars } from 'monaco-editor-textmate';
+//@ts-ignore
 import { loadWASM } from 'onigasm';
 
 let grammarsLoaded = false;

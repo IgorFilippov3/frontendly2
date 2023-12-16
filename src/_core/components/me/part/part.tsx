@@ -10,6 +10,7 @@ import { defaultOptions } from '@/_core/catalogs/monaco-editor-options.catalog';
 
 import styles from './part.module.css';
 import { MeFilesList } from "../files-list/files-list";
+import { useMeState } from "../state-provider/state-provider";
 
 interface MePartProps {
   lessonId: string;
@@ -23,6 +24,7 @@ export const MePart = ({ lessonId, partId }: MePartProps) => {
 
   const monaco = useMonaco();
   const router = useRouter();
+  const meState = useMeState();
 
   useEffect(() => {
     fetchPart(partId);
@@ -70,6 +72,21 @@ export const MePart = ({ lessonId, partId }: MePartProps) => {
     }
   }
 
+  const deletePart = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      await fetch(`/api/part/${partId}`, {
+        method: 'DELETE'
+      });
+
+      meState?.successMessage('Part was deleted.');
+      router.back();
+    } catch (e: any) {
+      meState?.errorMessage(e.message);
+    }
+  }
+
   const navigateToCreateFile = () => {
     router.push(`/me/lessons/${lessonId}/${partId}/create-file`);
   }
@@ -93,6 +110,7 @@ export const MePart = ({ lessonId, partId }: MePartProps) => {
         />
       </div>
       <div className={styles.controls}>
+        <Button variant="contained" color="warning" onClick={deletePart}>Delete</Button>
         <Button variant="contained" disabled={loading} onClick={savePart}>Save</Button>
       </div>
       <div className={styles.files}>
