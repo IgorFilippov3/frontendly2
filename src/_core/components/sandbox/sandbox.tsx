@@ -8,6 +8,7 @@ import { MonacoEditor } from '../monaco-editor';
 import './sandbox.css';
 import { File } from '@/_core/models/file/file.model';
 import { useRouter } from 'next/navigation';
+import { monokaiPro } from "@codesandbox/sandpack-themes";
 
 interface SandboxProps {
   files: File[] | undefined;
