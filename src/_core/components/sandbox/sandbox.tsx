@@ -1,8 +1,9 @@
 'use client';
 
 import React from 'react';
-import { SandpackLayout, SandpackPreview, SandpackProvider, SandpackFileExplorer, SandpackPredefinedTemplate } from '@codesandbox/sandpack-react';
-import { MonacoEditor } from '../monaco-editor';
+import { SandpackLayout, SandpackPreview, SandpackProvider, SandpackFileExplorer, SandpackPredefinedTemplate, SandpackCodeEditor } from '@codesandbox/sandpack-react';
+import { atomDark } from "@codesandbox/sandpack-themes";
+import { autocompletion, completionKeymap } from "@codemirror/autocomplete";
 //@ts-ignore
 // import { SandpackFileExplorer } from 'sandpack-file-explorer';
 import './sandbox.css';
@@ -48,7 +49,7 @@ export const Sandbox = ({ contentType, files, isLastPart, nextUrl }: SandboxProp
       case LessonContentType.angular:
         return 'angular';
       default:
-        throw new Error('Invalid lesson content type');        
+        throw new Error('Invalid lesson content type');
     }
   }
 
@@ -60,7 +61,7 @@ export const Sandbox = ({ contentType, files, isLastPart, nextUrl }: SandboxProp
     <SandpackProvider
       files={getSandpackFileTree(files)}
       template={getTemplate(contentType)}
-      theme="dark"
+      theme={atomDark}
       options={{
         recompileMode: "delayed",
         recompileDelay: 600,
@@ -74,7 +75,16 @@ export const Sandbox = ({ contentType, files, isLastPart, nextUrl }: SandboxProp
       }}>
       <SandpackLayout>
         <SandpackFileExplorer />
-        <MonacoEditor />
+        <SandpackCodeEditor
+          style={{ height: "100vh", margin: 0, fontSize: 15 }}
+          className="fr-code-editor"
+          extensions={[autocompletion()]}
+          extensionsKeymap={[completionKeymap] as any}
+          showTabs={true}
+          closableTabs={true}
+          showInlineErrors={true}
+          showLineNumbers={true}
+        />
         <SandpackPreview
           style={{ height: "100vh" }}
           showNavigator={true}
