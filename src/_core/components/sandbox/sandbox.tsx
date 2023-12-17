@@ -4,6 +4,7 @@ import React from 'react';
 import { SandpackLayout, SandpackPreview, SandpackProvider, SandpackFileExplorer, SandpackPredefinedTemplate, SandpackCodeEditor } from '@codesandbox/sandpack-react';
 import { atomDark } from "@codesandbox/sandpack-themes";
 import { autocompletion, completionKeymap } from "@codemirror/autocomplete";
+import emmet from '@emmetio/codemirror-plugin';
 //@ts-ignore
 // import { SandpackFileExplorer } from 'sandpack-file-explorer';
 import './sandbox.css';
@@ -76,7 +77,6 @@ export const Sandbox = ({ contentType, files, isLastPart, nextUrl }: SandboxProp
       <SandpackLayout>
         <SandpackFileExplorer />
         <SandpackCodeEditor
-          style={{ height: "100vh", margin: 0, fontSize: 15 }}
           className="fr-code-editor"
           extensions={[autocompletion()]}
           extensionsKeymap={[completionKeymap] as any}

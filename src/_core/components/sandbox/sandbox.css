@@ -1,6 +1,7 @@
 .custom-layout {
   height: calc(100vh - 40px);
   border-radius: 0 !important;
+  background-color: #282C34 !important;
 }
 
 .custom-tabs {
@@ -38,4 +39,8 @@
 
 .fr-code-editor {
   --sp-font-size: 15px;
+
+  height: calc(100vh - 40px) !important;
+  margin: 0 !important;
+  font-size: 15px !important;
 }
