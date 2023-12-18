@@ -1,12 +1,12 @@
 'use client';
 
 import React from 'react';
-import { SandpackLayout, SandpackPreview, SandpackProvider, SandpackFileExplorer, SandpackPredefinedTemplate, SandpackCodeEditor } from '@codesandbox/sandpack-react';
+import { SandpackLayout, SandpackPreview, SandpackProvider, SandpackPredefinedTemplate, SandpackCodeEditor } from '@codesandbox/sandpack-react';
 import { atomDark } from "@codesandbox/sandpack-themes";
 import { autocompletion, completionKeymap } from "@codemirror/autocomplete";
-import emmet from '@emmetio/codemirror-plugin';
 //@ts-ignore
-// import { SandpackFileExplorer } from 'sandpack-file-explorer';
+import { SandpackFileExplorer } from 'sandpack-file-explorer';
+import { abbreviationTracker } from '@emmetio/codemirror6-plugin';
 import './sandbox.css';
 import { File } from '@/_core/models/file/file.model';
 import { useRouter } from 'next/navigation';
@@ -21,8 +21,6 @@ interface SandboxProps {
 
 export const Sandbox = ({ contentType, files, isLastPart, nextUrl }: SandboxProps) => {
   const router = useRouter();
-
-  if (!files) return <span></span>;
 
   const getSandpackFileTree = (files: File[]) => {
     const tree: Record<string, string> = {};
@@ -58,6 +56,8 @@ export const Sandbox = ({ contentType, files, isLastPart, nextUrl }: SandboxProp
     router.push(url);
   }
 
+  if (!files) return <span></span>;
+
   return (
     <SandpackProvider
       files={getSandpackFileTree(files)}
@@ -77,12 +77,12 @@ export const Sandbox = ({ contentType, files, isLastPart, nextUrl }: SandboxProp
       <SandpackLayout>
         <SandpackFileExplorer />
         <SandpackCodeEditor
+          wrapContent
           className="fr-code-editor"
-          extensions={[autocompletion()]}
+          extensions={[autocompletion(), abbreviationTracker()]}
           extensionsKeymap={[completionKeymap] as any}
           showTabs={true}
           closableTabs={true}
-          showInlineErrors={true}
           showLineNumbers={true}
         />
         <SandpackPreview
