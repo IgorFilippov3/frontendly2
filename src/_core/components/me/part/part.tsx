@@ -3,7 +3,7 @@
 import { Part } from "@/_core/models/part/part.model";
 import { Editor, useMonaco } from "@monaco-editor/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { emmetCSS, emmetHTML, emmetJSX } from 'emmet-monaco-es';
 import { Button, Typography, styled } from '@mui/material';
 import { defaultOptions } from '@/_core/catalogs/monaco-editor-options.catalog';
@@ -11,6 +11,7 @@ import { defaultOptions } from '@/_core/catalogs/monaco-editor-options.catalog';
 import styles from './part.module.css';
 import { MeFilesList } from "../files-list/files-list";
 import { useMeState } from "../state-provider/state-provider";
+import { File } from "@/_core/models/file/file.model";
 
 interface MePartProps {
   lessonId: string;
@@ -72,6 +73,28 @@ export const MePart = ({ lessonId, partId }: MePartProps) => {
     }
   }
 
+  const copyFilesFromPreviousPart = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await fetch(`/api/files/copy`, {
+        method: 'POST',
+        body: JSON.stringify({ lessonId, partId, order: part?.order })
+      });
+      const files = await response.json();
+
+      setPart(part => {
+        part!.files = files;
+        return part;
+      });
+    } catch (e: any) {
+      meState?.errorMessage(e.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   const deletePart = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -111,6 +134,12 @@ export const MePart = ({ lessonId, partId }: MePartProps) => {
       </div>
       <div className={styles.controls}>
         <Button variant="contained" color="warning" onClick={deletePart}>Delete</Button>
+        <Button
+          variant="contained"
+          disabled={loading}
+          onClick={copyFilesFromPreviousPart}>
+          Copy files from previous part
+        </Button>
         <Button variant="contained" disabled={loading} onClick={savePart}>Save</Button>
       </div>
       <div className={styles.files}>

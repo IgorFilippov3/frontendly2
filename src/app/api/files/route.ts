@@ -4,13 +4,15 @@ import { File, FileType } from "@prisma/client";
 export async function POST(req: Request) {
   const body = await req.json();
   const name: string = body.name;
+  const path: string = body.path;
   const type: FileType = body.type;
   const partId: number = parseInt(body.partId);
 
   try {
     const file: File = await prisma.file.create({
       data: {
-        name, 
+        name,
+        path,
         type,
         part: { connect: { id: partId } }
       },

@@ -26,7 +26,7 @@ export const Sandbox = ({ contentType, files, isLastPart, nextUrl }: SandboxProp
     const tree: Record<string, string> = {};
 
     for (let file of files) {
-      tree['/' + file.name] = file.code || '';
+      tree[file.path + file.name] = file.code || '';
     }
 
     return tree;

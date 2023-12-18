@@ -11,6 +11,7 @@ interface MeCreateFileProps {
 
 export const MeCreateFile = ({ partId }: MeCreateFileProps) => {
   const [name, setName] = useState('');
+  const [path, setPath] = useState('/');
   const [type, setType] = useState<FileType>(FileType.html);
 
   const [loading, setLoading] = useState(false);
@@ -40,7 +41,7 @@ export const MeCreateFile = ({ partId }: MeCreateFileProps) => {
     try {
       await fetch(`/api/files`, {
         method: 'POST',
-        body: JSON.stringify({ name, type, partId }),
+        body: JSON.stringify({ name, path, type, partId }),
         headers: {
           'Content-Type': 'application/json',
         }
@@ -67,6 +68,16 @@ export const MeCreateFile = ({ partId }: MeCreateFileProps) => {
         variant="outlined"
         value={name}
         onChange={e => setName(e.target.value)}
+      />
+      <br />
+      <br />
+      <TextField
+        fullWidth
+        type="text"
+        label="File path"
+        variant="outlined"
+        value={path}
+        onChange={e => setPath(e.target.value)}
       />
       <br />
       <br />
