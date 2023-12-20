@@ -88,6 +88,7 @@ export const MePart = ({ lessonId, partId }: MePartProps) => {
         part!.files = files;
         return part;
       });
+      meState?.successMessage('Files was copied');
     } catch (e: any) {
       meState?.errorMessage(e.message);
     } finally {
@@ -114,6 +115,35 @@ export const MePart = ({ lessonId, partId }: MePartProps) => {
     router.push(`/me/lessons/${lessonId}/${partId}/create-file`);
   }
 
+  const renderMeFilesList = (part: Part) => {
+    if (part.files?.length === 0) {
+      return <span></span>;
+    }
+
+    return (
+      <MeFilesList
+        lessonId={lessonId}
+        partId={partId}
+        files={part.files!}
+      />
+    );
+  }
+
+  const renderCopyFilesButton = (part: Part) => {
+    if (part.files?.length || part.order === 1) {
+      return <span></span>;
+    }
+
+    return (
+      <Button
+        variant="contained"
+        disabled={loading}
+        onClick={copyFilesFromPreviousPart}>
+        Copy files from previous part
+      </Button>
+    );
+  }
+
   if (!part) return <span>Loading...</span>;
 
   return (
@@ -121,6 +151,7 @@ export const MePart = ({ lessonId, partId }: MePartProps) => {
       <Typography variant="h4" component="div" sx={{ textAlign: 'center' }}>
         {part.name}
       </Typography>
+      <br />
       <div className={styles.editor}>
         <Editor
           width="100%"
@@ -134,12 +165,7 @@ export const MePart = ({ lessonId, partId }: MePartProps) => {
       </div>
       <div className={styles.controls}>
         <Button variant="contained" color="warning" onClick={deletePart}>Delete</Button>
-        <Button
-          variant="contained"
-          disabled={loading}
-          onClick={copyFilesFromPreviousPart}>
-          Copy files from previous part
-        </Button>
+        {renderCopyFilesButton(part)}
         <Button variant="contained" disabled={loading} onClick={savePart}>Save</Button>
       </div>
       <div className={styles.files}>
@@ -147,11 +173,7 @@ export const MePart = ({ lessonId, partId }: MePartProps) => {
           <Button variant="contained" onClick={navigateToCreateFile}>Create file</Button>
         </div>
         <br />
-        {part.files?.length && <MeFilesList
-          lessonId={lessonId}
-          partId={partId}
-          files={part.files}
-        />}
+        {renderMeFilesList(part)}
       </div>
     </div>
   );

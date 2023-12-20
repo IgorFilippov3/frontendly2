@@ -5,7 +5,7 @@ export async function POST(req: Request) {
   const body = await req.json();
   const name: string = body.name;
   const path: string = body.path;
-  const type: FileType = body.type;
+  const type: FileType = body.type || FileType.html;
   const partId: number = parseInt(body.partId);
 
   try {

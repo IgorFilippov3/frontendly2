@@ -4,7 +4,6 @@ import { validateEmail } from "@/_core/utils/validate-email";
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 interface ValidationError {

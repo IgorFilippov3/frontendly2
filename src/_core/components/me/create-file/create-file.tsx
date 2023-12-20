@@ -2,8 +2,13 @@
 
 import { Button, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMeState } from "../state-provider/state-provider";
+
+interface ValidationError {
+  error: boolean;
+  text?: string;
+}
 
 interface MeCreateFileProps {
   partId: string;
@@ -11,12 +16,60 @@ interface MeCreateFileProps {
 
 export const MeCreateFile = ({ partId }: MeCreateFileProps) => {
   const [name, setName] = useState('');
+  const [nameError, setNameError] = useState<ValidationError | null>(null);
+
   const [path, setPath] = useState('/');
+  const [pathError, setPathError] = useState<ValidationError | null>(null);
 
   const [loading, setLoading] = useState(false);
+  const [disabledSubmit, setDisabledSubmit] = useState(false);
 
   const router = useRouter();
   const meState = useMeState();
+
+  useEffect(() => {
+    if (!pathError) return;
+
+    setDisabledSubmit(pathError.error);
+
+  }, [pathError]);
+
+  useEffect(() => {
+    if (!nameError) return;
+
+    setDisabledSubmit(nameError.error);
+
+  }, [nameError]);
+
+  const handleNameChange = (e: any) => {
+    const value: string = e.target.value;
+
+    setName(value);
+
+    if (value.includes('.')) {
+      setNameError({ error: false });
+    } else {
+      setNameError({
+        error: true,
+        text: 'File name should include an extentsion'
+      })
+    }
+  }
+
+  const handlePathChange = (e: any) => {
+    const value: string = e.target.value;
+
+    setPath(value);
+
+    if (value.startsWith('/') && value.endsWith('/')) {
+      setPathError({ error: false });
+    } else {
+      setPathError({
+        error: true,
+        text: `Path should start and end with forward slash,`
+      });
+    }
+  }
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,8 +105,10 @@ export const MeCreateFile = ({ partId }: MeCreateFileProps) => {
         type="text"
         label="File name"
         variant="outlined"
+        error={nameError?.error}
+        helperText={nameError?.text}
         value={name}
-        onChange={e => setName(e.target.value)}
+        onChange={e => handleNameChange(e)}
       />
       <br />
       <br />
@@ -62,8 +117,10 @@ export const MeCreateFile = ({ partId }: MeCreateFileProps) => {
         type="text"
         label="File path"
         variant="outlined"
+        error={pathError?.error}
+        helperText={pathError?.text}
         value={path}
-        onChange={e => setPath(e.target.value)}
+        onChange={e => handlePathChange(e)}
       />
       <br />
       <br />
@@ -72,7 +129,7 @@ export const MeCreateFile = ({ partId }: MeCreateFileProps) => {
           type="submit"
           variant="contained"
           color="primary"
-          disabled={loading}>
+          disabled={loading || disabledSubmit}>
           Create
         </Button>
       </div>

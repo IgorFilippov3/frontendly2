@@ -19,12 +19,22 @@ export const MeLessonsList = () => {
     fetchLessons(user.role);
   }, [user.role]);
 
+  const sortByPublished = (a: Lesson, b: Lesson) => {
+    if (a.published === b.published) {
+      return 0;
+    } else if (a.published) {
+      return -1;
+    } else {
+      return 1;
+    }
+  }
+
   const fetchLessons = async (mode: UserRole) => {
     try {
       const response = await fetch(`/api/lessons?mode=${mode}`);
       const lessons: Lesson[] = await response.json();
 
-      setLessons(lessons);
+      setLessons(lessons.sort(sortByPublished));
     } catch (e) {
       console.error(e);
     }
@@ -38,7 +48,7 @@ export const MeLessonsList = () => {
     return lessons.map(lesson => {
       return (
         <TableRow
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: 'pointer', backgroundColor: lesson.published ? '#EAEBF8' : '' }}
           hover
           key={lesson.id}
           sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

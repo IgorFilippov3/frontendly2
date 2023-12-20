@@ -47,7 +47,9 @@ export const MeLesson = ({ lessonId }: MeLessonProps) => {
   const renderRows = (parts: PartShortInfo[] | undefined) => {
     if (!parts) return;
 
-    return parts.map(part => {
+    return parts
+      .sort((a, b) => a.order - b.order)
+      .map(part => {
       return (
         <TableRow
           style={{ cursor: 'pointer' }}
