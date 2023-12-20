@@ -27,8 +27,6 @@
   border: 1px solid #4eb543;
   border-radius: 4px;
   transition: all 250ms ease-in-out;
-  position: relative;
-  top: -40px;
   cursor: pointer;
 }
 

@@ -86,7 +86,7 @@ export const Sandbox = ({ contentType, files, isLastPart, nextUrl }: SandboxProp
           showLineNumbers={true}
         />
         <SandpackPreview
-          style={{ height: "100vh" }}
+          style={{ height: "100%" }}
           showNavigator={true}
           showOpenInCodeSandbox={false}
           actionsChildren={

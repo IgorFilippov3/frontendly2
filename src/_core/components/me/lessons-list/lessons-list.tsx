@@ -23,6 +23,7 @@ export const MeLessonsList = () => {
     try {
       const response = await fetch(`/api/lessons?mode=${mode}`);
       const lessons: Lesson[] = await response.json();
+
       setLessons(lessons);
     } catch (e) {
       console.error(e);

@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 import { Inter } from 'next/font/google'
 import { MeStateProvider } from '@/_core/components/me/state-provider/state-provider';
 import { MeSnackbar } from '@/_core/components/me/snackbar/snackbar';
+import { Gtm } from '@/_core/components/gtm/gtm';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -26,6 +27,7 @@ export default async function MeLayout({ children }: MeLayoutProps) {
     <html>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
+        <Gtm />
       </head>
       <body className={inter.className}>
         <SessionProvider session={session}>

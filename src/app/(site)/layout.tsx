@@ -5,6 +5,7 @@ import { SessionProvider } from '@/_core/components/session-provider/session-pro
 import { getServerSession } from 'next-auth';
 import { options } from '@lib/auth';
 import { Header } from '@/_core/components/site/header/header';
+import { Gtm } from '@/_core/components/gtm/gtm';
 
 export const metadata: Metadata = {
   title: 'Frontendly',
@@ -22,6 +23,7 @@ export default async function SiteLayout({ children }: SiteLayoutProps) {
     <html lang="en">
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
+        <Gtm />
       </head>
       <body>
         <SessionProvider session={session}>
