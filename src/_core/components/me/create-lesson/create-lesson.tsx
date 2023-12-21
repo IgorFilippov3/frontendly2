@@ -5,6 +5,8 @@ import { LessonContentType, LessonContentTypeItem } from "@/_core/models/lesson/
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React, { useMemo, useState } from "react";
+import { TemplatePreview } from "../template-preview/template-preview";
+import { MeBackButton } from "../back-button/back-button";
 
 export const MeCreateLesson = () => {
   const router = useRouter();
@@ -12,14 +14,11 @@ export const MeCreateLesson = () => {
   const contentTypeItems: LessonContentTypeItem[] = useMemo(() => {
     return LessonContentType.getItems();
   }, []);
-  const accessTypeItems: LessonAccessTypeItem[] = useMemo(() => {
-    return LessonAccessType.getItems();
-  }, []);
 
   const [name, setName] = useState('');
   const [posterImage, setPosterImage] = useState('');
   const [contentType, setContentType] = useState<LessonContentType>(LessonContentType.html);
-  const [accessType, setAccessType] = useState<LessonAccessType>(LessonAccessType.free);
+  const [accessType] = useState<LessonAccessType>(LessonAccessType.free);
 
   const [loading, setLoading] = useState(false);
 
@@ -61,43 +60,45 @@ export const MeCreateLesson = () => {
   }
 
   return (
-    <form onSubmit={submitForm}>
-      <Typography variant="h4" component="div" sx={{ textAlign: 'center' }}>
-        Create lesson
-      </Typography>
-      <br />
-      <TextField
-        fullWidth
-        type="text"
-        label="Lesson name"
-        variant="outlined"
-        value={name}
-        onChange={e => setName(e.target.value)}
-      />
-      <br />
-      <br />
-      <TextField
-        fullWidth
-        type="text"
-        label="Poster image (optional)"
-        variant="outlined"
-        value={posterImage}
-        onChange={e => setPosterImage(e.target.value)}
-      />
-      <br />
-      <br />
-      <FormControl fullWidth>
-        <InputLabel id="content-type-label">Content type</InputLabel>
-        <Select
-          labelId="content-type-label"
-          label="Content type"
-          value={contentType}
-          onChange={e => setContentType(e.target.value as LessonContentType)}
-          fullWidth>
-          {renderMenuItems(contentTypeItems)}
-        </Select>
-      </FormControl>
-      <br />
+    <>
+      <MeBackButton url="/me/lessons" />
+      <form onSubmit={submitForm}>
+        <Typography variant="h4" component="div" sx={{ textAlign: 'center' }}>
+          Create lesson
+        </Typography>
+        <br />
+        <TextField
+          fullWidth
+          type="text"
+          label="Lesson name"
+          variant="outlined"
+          value={name}
+          onChange={e => setName(e.target.value)}
+        />
+        <br />
+        <br />
+        <TextField
+          fullWidth
+          type="text"
+          label="Poster image (optional)"
+          variant="outlined"
+          value={posterImage}
+          onChange={e => setPosterImage(e.target.value)}
+        />
+        <br />
+        <br />
+        <FormControl fullWidth>
+          <InputLabel id="content-type-label">Content type</InputLabel>
+          <Select
+            labelId="content-type-label"
+            label="Content type"
+            value={contentType}
+            onChange={e => setContentType(e.target.value as LessonContentType)}
+            fullWidth>
+            {renderMenuItems(contentTypeItems)}
+          </Select>
+        </FormControl>
+        {/* <br />
       <br />
       <FormControl fullWidth>
         <InputLabel id="access-type-label">Access type</InputLabel>
@@ -109,16 +110,25 @@ export const MeCreateLesson = () => {
           fullWidth>
           {renderMenuItems(accessTypeItems)}
         </Select>
-      </FormControl>
-      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 18 }}>
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          disabled={loading}>
-          Create
-        </Button>
+      </FormControl> */}
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 18 }}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={loading}>
+            Create
+          </Button>
+        </div>
+      </form>
+      <div style={{ marginTop: 18 }}>
+        <Typography variant="h6" component="div" sx={{ marginBottom: 2 }}>
+          This is an example of lesson template, based on selected content type.
+          <br />
+          You can add your own files or overwrite these.
+        </Typography>
+        <TemplatePreview contentType={contentType} />
       </div>
-    </form>
+    </>
   );
 }

@@ -13,5 +13,5 @@ interface MeCreateFilePageProps {
 }
 
 export default function MeCreateFilePage({ params }: MeCreateFilePageProps) {
-  return <MeCreateFile partId={params.partId} />
+  return <MeCreateFile lessonId={params.lessonId} partId={params.partId} />
 }

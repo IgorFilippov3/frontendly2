@@ -5,6 +5,9 @@ interface MePartPageProps {
   params: {
     lessonId: string,
     partId: string;
+  },
+  searchParams: {
+    key: string;
   }
 }
 
@@ -17,6 +20,6 @@ export async function generateMetadata({ params }: MePartPageProps) {
   }
 }
 
-export default function MePartPage({ params }: MePartPageProps) {
-  return <MePart lessonId={params.lessonId} partId={params.partId} />;
+export default function MePartPage({ params, searchParams }: MePartPageProps) {
+  return <MePart lesssonKey={searchParams.key} lessonId={params.lessonId} partId={params.partId} />;
 }

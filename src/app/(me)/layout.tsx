@@ -9,6 +9,7 @@ import { Inter } from 'next/font/google'
 import { MeStateProvider } from '@/_core/components/me/state-provider/state-provider';
 import { MeSnackbar } from '@/_core/components/me/snackbar/snackbar';
 import { Gtm } from '@/_core/components/gtm/gtm';
+import { SandpackCSS } from '@/_core/components/sandbox/sandpack-styles';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -27,6 +28,7 @@ export default async function MeLayout({ children }: MeLayoutProps) {
     <html>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
+        <SandpackCSS />
         <Gtm />
       </head>
       <body className={inter.className}>

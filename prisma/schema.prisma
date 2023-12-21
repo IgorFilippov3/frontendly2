@@ -40,18 +40,19 @@ model VerificationToken {
 }
 
 model Lesson {
-  id          Int               @id @default(autoincrement())
-  name        String
-  key         String
-  published   Boolean           @default(false)
-  posterImage String?
-  contentType LessonContentType
-  accessType  AccessType        @default(free)
-  createdAt   DateTime          @default(now()) @map("created_at")
-  updatedAt   DateTime          @updatedAt @map("updated_at")
-  user        User?             @relation(fields: [userId], references: [id])
-  userId      Int?
-  parts       Part[]
+  id             Int               @id @default(autoincrement())
+  name           String
+  key            String
+  published      Boolean           @default(false)
+  readyToPublish Boolean           @default(false)
+  posterImage    String?
+  contentType    LessonContentType
+  accessType     AccessType        @default(free)
+  createdAt      DateTime          @default(now()) @map("created_at")
+  updatedAt      DateTime          @updatedAt @map("updated_at")
+  user           User?             @relation(fields: [userId], references: [id])
+  userId         Int?
+  parts          Part[]
 
   @@map("lessons")
 }
@@ -60,6 +61,7 @@ enum LessonContentType {
   html
   css
   javascript
+  typescript
   reactjs
   reactts
   angular

@@ -12,9 +12,9 @@ export const Header = () => {
           <Link href="/auth/signin" className={styles.login}>
             Log in
           </Link>
-          {/* <Link href="/auth/signup" className={styles.register}>
-            Create account
-          </Link> */}
+          <Link href="/auth/signup" className={styles.register}>
+            Become a creator
+          </Link>
         </div>
       </div>
     </header>

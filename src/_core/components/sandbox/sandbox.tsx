@@ -11,6 +11,7 @@ import './sandbox.css';
 import { File } from '@/_core/models/file/file.model';
 import { useRouter } from 'next/navigation';
 import { LessonContentType } from '@/_core/models/lesson/lesson-content-type.model';
+import { getSandboxTemplate } from '@/_core/utils/get-sandbox-template';
 
 interface SandboxProps {
   contentType: LessonContentType;
@@ -32,26 +33,6 @@ export const Sandbox = ({ contentType, files, isLastPart, nextUrl }: SandboxProp
     return tree;
   }
 
-  const getTemplate = (contentType: LessonContentType): SandpackPredefinedTemplate => {
-    switch (contentType) {
-      case LessonContentType.html:
-      case LessonContentType.css:
-        return 'static';
-      case LessonContentType.javascript:
-        return 'vanilla';
-      case LessonContentType.typescript:
-        return 'vanilla-ts';
-      case LessonContentType.reactjs:
-        return 'react';
-      case LessonContentType.reactts:
-        return 'react-ts';
-      case LessonContentType.angular:
-        return 'angular';
-      default:
-        throw new Error('Invalid lesson content type');
-    }
-  }
-
   const navigateNext = (url: string) => {
     router.push(url);
   }
@@ -61,7 +42,7 @@ export const Sandbox = ({ contentType, files, isLastPart, nextUrl }: SandboxProp
   return (
     <SandpackProvider
       files={getSandpackFileTree(files)}
-      template={getTemplate(contentType)}
+      template={getSandboxTemplate(contentType)}
       theme={atomDark}
       options={{
         recompileMode: "delayed",

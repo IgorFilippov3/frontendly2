@@ -45,7 +45,7 @@
   background-color: #ffffff;
   color: rgb(36 24 91);
   border: 1px solid rgb(36 24 91);
-  padding: 12px;
+  padding: 10px 12px;
   border-radius: 10px;
   transition: all 250ms ease-in-out;
   cursor: pointer;

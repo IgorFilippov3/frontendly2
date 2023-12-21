@@ -1,39 +1,36 @@
 'use client';
 
 import { Part } from "@/_core/models/part/part.model";
-import { Editor, useMonaco } from "@monaco-editor/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { emmetCSS, emmetHTML, emmetJSX } from 'emmet-monaco-es';
 import { Button, Typography, styled } from '@mui/material';
-import { defaultOptions } from '@/_core/catalogs/monaco-editor-options.catalog';
+import MDEditor from '@uiw/react-md-editor';
 
 import styles from './part.module.css';
 import { MeFilesList } from "../files-list/files-list";
 import { useMeState } from "../state-provider/state-provider";
-import { File } from "@/_core/models/file/file.model";
+import { MeBackButton } from "../back-button/back-button";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 interface MePartProps {
+  lesssonKey: string;
   lessonId: string;
   partId: string;
 }
 
-export const MePart = ({ lessonId, partId }: MePartProps) => {
+export const MePart = ({ lesssonKey, lessonId, partId }: MePartProps) => {
+  const { data } = useSession();
   const [part, setPart] = useState<Part>();
   const [task, setTask] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const monaco = useMonaco();
   const router = useRouter();
   const meState = useMeState();
 
   useEffect(() => {
     fetchPart(partId);
   }, [partId]);
-
-  useEffect(() => {
-    initMonaco(monaco);
-  }, [monaco]);
 
   const fetchPart = async (partId: string) => {
     try {
@@ -44,14 +41,6 @@ export const MePart = ({ lessonId, partId }: MePartProps) => {
     } catch (e) {
       console.error(e);
     }
-  }
-
-  const initMonaco = (monaco: any) => {
-    if (monaco === null) return;
-
-    emmetHTML(monaco);
-    emmetCSS(monaco);
-    emmetJSX(monaco, ['javascript']);
   }
 
   const savePart = async (e: React.FormEvent) => {
@@ -66,7 +55,9 @@ export const MePart = ({ lessonId, partId }: MePartProps) => {
           "Content-Type": "application/json",
         },
       });
-    } catch (e) {
+      meState?.successMessage('Part was updated');
+    } catch (e: any) {
+      meState?.errorMessage(e.message);
       console.error(e);
     } finally {
       setLoading(false);
@@ -147,34 +138,51 @@ export const MePart = ({ lessonId, partId }: MePartProps) => {
   if (!part) return <span>Loading...</span>;
 
   return (
-    <div className={styles.part}>
-      <Typography variant="h4" component="div" sx={{ textAlign: 'center' }}>
-        {part.name}
-      </Typography>
-      <br />
-      <div className={styles.editor}>
-        <Editor
-          width="100%"
-          height="100%"
-          language="html"
-          options={defaultOptions}
-          theme="light"
-          defaultValue={part.taskMarkdown}
-          onChange={(value) => setTask(value || '')}
-        />
-      </div>
-      <div className={styles.controls}>
-        <Button variant="contained" color="warning" onClick={deletePart}>Delete</Button>
-        {renderCopyFilesButton(part)}
-        <Button variant="contained" disabled={loading} onClick={savePart}>Save</Button>
-      </div>
-      <div className={styles.files}>
-        <div className={styles.filesControls}>
-          <Button variant="contained" onClick={navigateToCreateFile}>Create file</Button>
+    <>
+      <MeBackButton url={`/me/lessons/${lessonId}`} />
+      <div className={styles.part}>
+        <Typography variant="h4" component="div" sx={{ textAlign: 'center' }}>
+          {part.name}
+        </Typography>
+        <br />
+        <div className={styles.editor}>
+          <MDEditor
+            commands={[]}
+            autoFocus={true}
+            height="100%"
+            textareaProps={{
+              placeholder: "Write your tutorial here..."
+            }}
+            value={task}
+            onChange={(value) => setTask(value || '')}
+          />
         </div>
         <br />
-        {renderMeFilesList(part)}
+        <Typography variant="subtitle1" component="div" sx={{ textAlign: 'right' }}>
+          Use <a
+            href="https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet"
+            target="_blank">
+            Markdown
+          </a> to write and format posts.
+        </Typography>
+        <div className={styles.controls}>
+          <Button variant="contained" color="warning" onClick={deletePart}>Delete</Button>
+          {renderCopyFilesButton(part)}
+          <div>
+            <Link href={`/${data?.user.key}/${lesssonKey}/${part.order}`} target="_blank" passHref style={{ marginRight: 18 }}>
+              <Button variant="contained">Preview</Button>
+            </Link>
+            <Button variant="contained" disabled={loading} onClick={savePart}>Save</Button>
+          </div>
+        </div>
+        <div className={styles.files}>
+          <div className={styles.filesControls}>
+            <Button variant="contained" onClick={navigateToCreateFile}>Create file</Button>
+          </div>
+          <br />
+          {renderMeFilesList(part)}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

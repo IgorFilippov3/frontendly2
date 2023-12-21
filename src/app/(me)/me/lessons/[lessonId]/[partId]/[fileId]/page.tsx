@@ -19,5 +19,5 @@ export async function generateMetadata({ params: { fileId } }: MeFilePageProps) 
 }
 
 export default function MeFilePage({ params }: MeFilePageProps) {
-  return <MeFile fileId={params.fileId} />;
+  return <MeFile lessonId={params.lessonId} partId={params.partId} fileId={params.fileId} />;
 }

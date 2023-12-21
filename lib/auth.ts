@@ -40,6 +40,7 @@ export const options: NextAuthOptions = {
           name: user.name,
           email: user.email,
           role: user.role,
+          key: user.key,
         }
       }
     }),
@@ -75,6 +76,7 @@ export const options: NextAuthOptions = {
           name: user.name,
           email: user.email,
           role: user.role,
+          key: user.key,
         }
       },
     }),
@@ -89,6 +91,8 @@ export const options: NextAuthOptions = {
         token.id = user?.id;
         //@ts-ignore
         token.role = user.role;
+        //@ts-ignore
+        token.key = user.key;
       }
       return token
       
@@ -96,6 +100,7 @@ export const options: NextAuthOptions = {
     session({ session, token, user }) {
       session.user.id = token.id;
       session.user.role = token.role;
+      session.user.key = token.key;
       return session;
     },
   },

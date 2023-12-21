@@ -74,6 +74,7 @@ export async function POST(req: Request) {
 
     return Response.json(new_lesson, { status: 201 });
   } catch (e: any) {
+    console.error(e);
     return Response.json(e.message, { status: 400 });
   }
 }

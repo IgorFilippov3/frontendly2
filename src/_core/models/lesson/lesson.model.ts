@@ -7,6 +7,7 @@ export interface Lesson {
   name: string;
   key: string;
   published: boolean;
+  readyToPublish: boolean;
   contentType: LessonContentType;
   accessType: LessonAccessType;
   createdAt: Date;

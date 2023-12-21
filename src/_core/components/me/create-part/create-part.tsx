@@ -3,6 +3,7 @@
 import { Button, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { MeBackButton } from "../back-button/back-button";
 
 interface MeCreatePartProps {
   lessonId: string;
@@ -38,28 +39,31 @@ export const MeCreatePart = ({ lessonId }: MeCreatePartProps) => {
   }
 
   return (
-    <form onSubmit={submitForm}>
-      <Typography variant="h4" component="div" sx={{ textAlign: 'center' }}>
-        Create part
-      </Typography>
-      <br />
-      <TextField
-        fullWidth
-        type="text"
-        label="Part name"
-        variant="outlined"
-        value={name}
-        onChange={e => setName(e.target.value)}
-      />
-      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 18 }}>
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          disabled={loading}>
-          Create
-        </Button>
-      </div>
-    </form>
+    <>
+      <MeBackButton url={`/me/lessons/${lessonId}`} />
+      <form onSubmit={submitForm}>
+        <Typography variant="h4" component="div" sx={{ textAlign: 'center' }}>
+          Create part
+        </Typography>
+        <br />
+        <TextField
+          fullWidth
+          type="text"
+          label="Part name"
+          variant="outlined"
+          value={name}
+          onChange={e => setName(e.target.value)}
+        />
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 18 }}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={loading}>
+            Create
+          </Button>
+        </div>
+      </form>
+    </>
   );
 }

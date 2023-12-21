@@ -10,12 +10,15 @@ import { Button, Typography } from "@mui/material";
 
 import styles from './file.module.css';
 import { useMeState } from "../state-provider/state-provider";
+import { MeBackButton } from "../back-button/back-button";
 
 interface MeFileProps {
+  lessonId: string;
+  partId: string;
   fileId: string;
 }
 
-export const MeFile = ({ fileId }: MeFileProps) => {
+export const MeFile = ({ lessonId, partId, fileId }: MeFileProps) => {
   const [file, setFile] = useState<File>();
 
   const [loading, setLoading] = useState(false);
@@ -94,9 +97,11 @@ export const MeFile = ({ fileId }: MeFileProps) => {
 
   return (
     <div className={styles.file}>
+      <MeBackButton url={`/me/lessons/${lessonId}/${partId}`} />
       <Typography variant="h4" component="div" sx={{ textAlign: 'center' }}>
-        Create part
+        {file.name}
       </Typography>
+      <br />
       <div className={styles.editor}>
         <Editor
           width="100%"
