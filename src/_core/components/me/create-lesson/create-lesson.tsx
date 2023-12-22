@@ -1,5 +1,7 @@
 'use client';
 
+import styles from './create-lesson.module.css';
+
 import { LessonAccessType, LessonAccessTypeItem } from "@/_core/models/lesson/lesson-access-type.model";
 import { LessonContentType, LessonContentTypeItem } from "@/_core/models/lesson/lesson-content-type.model";
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
@@ -121,14 +123,12 @@ export const MeCreateLesson = () => {
           </Button>
         </div>
       </form>
-      <div style={{ marginTop: 18 }}>
-        <Typography variant="h6" component="div" sx={{ marginBottom: 2 }}>
-          This is an example of lesson template, based on selected content type.
-          <br />
-          You can add your own files or overwrite these.
-        </Typography>
-        <TemplatePreview contentType={contentType} />
+      <div className={styles.CreateLessonP}>
+        This is an example of lesson template, based on selected content type.
+        <br />
+        You can add your own files or overwrite these.
       </div>
+      <TemplatePreview contentType={contentType} />
     </>
   );
 }

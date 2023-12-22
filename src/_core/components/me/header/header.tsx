@@ -29,8 +29,18 @@ export const MeHeader = () => {
         </Typography>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <div style={{ marginRight: 12 }}>
+            <Link href="/me" passHref>
+              <Button className={link}>Getting started</Button>
+            </Link>
+          </div>
+          <div style={{ marginRight: 12 }}>
             <Link href="/me/lessons" passHref>
               <Button className={link}>Lessons</Button>
+            </Link>
+          </div>
+          <div style={{ marginRight: 12 }}>
+            <Link href="https://discord.gg/DattynRJ" passHref>
+              <Button className={link}>Discord</Button>
             </Link>
           </div>
           <IconButton

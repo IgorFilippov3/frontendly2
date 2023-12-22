@@ -1,0 +1,22 @@
+.Docs {
+  font-family: 'Roboto', sans-serif;
+  margin-top: 24px;
+}
+
+.DocsP {
+  color: #1c1e21;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 300;
+  margin-bottom: 18px;
+}
+
+.DocsH {
+  color: #1976d2;
+  font-weight: 500;
+
+}
+
+.DocsFeelReady {
+  margin-top: 24px;
+}

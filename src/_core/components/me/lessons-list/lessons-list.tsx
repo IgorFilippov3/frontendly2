@@ -3,7 +3,7 @@
 import { Lesson } from "@/_core/models/lesson/lesson.model";
 import { UserRole } from "@/_core/models/user/user-role.model";
 import { User } from "@/_core/models/user/user.model";
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Paper, Skeleton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -12,12 +12,12 @@ export const MeLessonsList = () => {
   const { data } = useSession();
   const user: User = data?.user;
 
-  const [lessons, setLessons] = useState<Lesson[]>([]);
+  const [lessons, setLessons] = useState<Lesson[] | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     fetchLessons(user.role);
-  }, [user.role]);
+  });
 
   const sortByPublished = (a: Lesson, b: Lesson) => {
     if (a.published === b.published) {
@@ -61,6 +61,17 @@ export const MeLessonsList = () => {
         </TableRow>
       )
     })
+  }
+
+  if (!lessons) {
+    return (
+      <>
+        <Skeleton animation="wave" height={60} />
+        <Skeleton animation="wave" height={60} />
+        <Skeleton animation="wave" height={60} />
+        <Skeleton animation="wave" height={60} />
+      </>
+    );
   }
 
   return (

@@ -1,3 +1,4 @@
+import { MeDocs } from '@/_core/components/me/docs/docs';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -5,5 +6,5 @@ export const metadata: Metadata = {
 }
 
 export default function MePage() {
-  return <span></span>;
+  return <MeDocs />;
 }
