@@ -9,7 +9,8 @@
     "lint": "next lint",
     "migrate": "npx prisma migrate dev --name init",
     "seed": "ts-node --transpile-only prisma/seed.ts",
-    "predeploy": "npm run migrate && npm run seed"
+    "predeploy": "npm run migrate && npm run seed",
+    "postbuild": "npm run migrate"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.11.1",
