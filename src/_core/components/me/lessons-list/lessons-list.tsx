@@ -17,7 +17,7 @@ export const MeLessonsList = () => {
 
   useEffect(() => {
     fetchLessons(user.role);
-  });
+  }, [user.role]);
 
   const sortByPublished = (a: Lesson, b: Lesson) => {
     if (a.published === b.published) {
