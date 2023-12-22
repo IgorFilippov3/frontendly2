@@ -9,10 +9,8 @@ export const metadata: Metadata = {
 
 export default async function SiteMain() {
   const response = await fetch(process.env.URL + '/api/tutorial/lessons', {
+    method: 'POST',
     cache: 'no-store',
-    next: {
-      revalidate: 0,
-    }
   });
   const lessons: Lesson[] = await response.json();
 

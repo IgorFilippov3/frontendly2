@@ -1,7 +1,7 @@
 import prisma from "@lib/prisma";
 import { Lesson } from "@prisma/client";
 
-export async function GET() {
+export async function POST() {
   try {
     const lessons: Lesson[] = await prisma.lesson.findMany({
       where: {
