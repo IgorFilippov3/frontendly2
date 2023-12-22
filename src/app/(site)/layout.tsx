@@ -2,7 +2,7 @@ import '@/_core/css/globals.css';
 
 import type { Metadata } from 'next';
 import { SessionProvider } from '@/_core/components/session-provider/session-provider';
-import { getServerSession } from 'next-auth';
+import { Session, getServerSession } from 'next-auth';
 import { options } from '@lib/auth';
 import { Header } from '@/_core/components/site/header/header';
 import { Gtm } from '@/_core/components/gtm/gtm';
@@ -17,7 +17,7 @@ interface SiteLayoutProps {
 }
 
 export default async function SiteLayout({ children }: SiteLayoutProps) {
-  const session = await getServerSession(options);
+  const session: Session | null = await getServerSession(options);
 
   return (
     <html lang="en">
@@ -27,7 +27,7 @@ export default async function SiteLayout({ children }: SiteLayoutProps) {
       </head>
       <body>
         <SessionProvider session={session}>
-          <Header />
+          <Header session={session} />
           {children}
         </SessionProvider>
       </body>

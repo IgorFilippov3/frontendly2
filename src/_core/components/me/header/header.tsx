@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 const {
   link,
   toolbar,
+  logo,
 } = styles;
 
 export const MeHeader = () => {
@@ -24,9 +25,9 @@ export const MeHeader = () => {
   return (
     <AppBar position="static">
       <Toolbar className={toolbar}>
-        <Typography variant="h4" component="div">
+        <Link href="/" className={logo}>
           Frontendly
-        </Typography>
+        </Link>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <div style={{ marginRight: 12 }}>
             <Link href="/me" passHref>
@@ -34,13 +35,13 @@ export const MeHeader = () => {
             </Link>
           </div>
           <div style={{ marginRight: 12 }}>
-            <Link href="/me/lessons" passHref>
-              <Button className={link}>Lessons</Button>
+            <Link href="https://discord.gg/DattynRJ" passHref>
+              <Button className={link}>Discord</Button>
             </Link>
           </div>
           <div style={{ marginRight: 12 }}>
-            <Link href="https://discord.gg/DattynRJ" passHref>
-              <Button className={link}>Discord</Button>
+            <Link href="/me/lessons" passHref>
+              <Button className={link}>Lessons</Button>
             </Link>
           </div>
           <IconButton

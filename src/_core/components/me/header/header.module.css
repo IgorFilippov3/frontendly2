@@ -13,3 +13,10 @@
   display: flex;
   justify-content: space-between;
 }
+
+.logo {
+  font-family: "Roboto", sans-serif;
+  font-size: 34px;
+  color: #ffffff;
+  text-decoration: none;
+}
