@@ -21,8 +21,30 @@ model User {
   updatedAt     DateTime  @updatedAt @map("updated_at")
   role          UserRole  @default(user)
   lessons       Lesson[]
+  accounts      Account[]
 
   @@map("users")
+}
+
+model Account {
+  id                       Int     @id @default(autoincrement())
+  type                     String
+  provider                 String
+  providerAccountId        String
+  token_type               String?
+  refresh_token            String?
+  access_token             String?
+  id_token                 String?
+  scope                    String?
+  session_state            String?
+  expires_at               Int?
+  refresh_token_expires_in Int?
+
+  user   User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int?
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
 }
 
 enum UserRole {

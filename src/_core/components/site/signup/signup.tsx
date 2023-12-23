@@ -5,6 +5,7 @@ import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { GithubButton } from "../github-button/github-button";
 
 interface ValidationError {
   error: boolean;
@@ -91,6 +92,16 @@ export const Signup = () => {
     }
   }
 
+  const signUpWithGithub = () => {
+    try {
+      signIn('github', {
+        callbackUrl: '/me'
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <Box sx={{
@@ -99,6 +110,8 @@ export const Signup = () => {
         flexDirection: 'column',
         alignItems: 'center',
       }}>
+        <GithubButton onClick={signUpWithGithub}>Sign up with github</GithubButton>
+        <div style={{ textAlign: 'center', marginTop: 16, marginBottom: 6 }}>&mdash; OR &mdash;</div>
         <Typography component="h1" variant="h5" sx={{ color: '#24185b' }}>
           Create account
         </Typography>

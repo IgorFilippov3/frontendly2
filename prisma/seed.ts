@@ -8,7 +8,7 @@ async function main() {
 
   const user = await prisma.user.findUnique({
     where: {
-      email: 'filippovigorz@gmail.com'
+      email: 'filippovigorz@frontenldy.dev'
     }
   });
 
@@ -16,7 +16,7 @@ async function main() {
     await prisma.user.create({
       data: {
         name: 'Ihor Filippov',
-        email: 'filippovigorz@gmail.com',
+        email: 'filippovigorz@frontenldy.dev',
         password: SHA256('qPeA9mUbHKVzA6cj').toString(),
         role: 'admin',
         key: 'ihor-filippov'

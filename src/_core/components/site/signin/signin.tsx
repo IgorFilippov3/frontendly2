@@ -4,6 +4,7 @@ import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
+import { GithubButton } from "../github-button/github-button";
 
 export const Signin = () => {
   const [email, setEmail] = useState('');
@@ -27,6 +28,16 @@ export const Signin = () => {
 
   const handlePasswordChange = (e: any) => setPassword(e.target.value);
 
+  const signInWithGithub = () => {
+    try {
+      signIn('github', {
+        callbackUrl: '/me'
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <Box sx={{
@@ -35,8 +46,10 @@ export const Signin = () => {
         flexDirection: 'column',
         alignItems: 'center',
       }}>
+        <GithubButton onClick={signInWithGithub}>Log in with github</GithubButton>
+        <div style={{ textAlign: 'center', marginTop: 16, marginBottom: 6 }}>&mdash; OR &mdash;</div>
         <Typography component="h1" variant="h5" sx={{ color: '#24185b' }}>
-          Log in
+          Log in with email
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField

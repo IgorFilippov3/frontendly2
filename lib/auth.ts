@@ -12,6 +12,15 @@ export const options: NextAuthOptions = {
     GitHubProvider({
       clientId: process.env.GITHUB_ID as string,
       clientSecret: process.env.GITHUB_SECRET as string,
+      profile(profile) {
+        return {
+          id: profile.id.toString(),
+          name: profile.name ?? profile.login,
+          email: profile.email,
+          key: nameToKey(profile.name ?? profile.login),
+          password: hashPassword(profile.email + process.env.NEXTAUTH_SECRET)
+        }
+      },
     }),
     CredentialsProvider({
       id: 'register',
@@ -86,7 +95,13 @@ export const options: NextAuthOptions = {
   },
   callbacks: {
     jwt({ token, account, user }) {
+      console.log('jwt');
+      console.dir({
+        token, account, user
+      })
+
       if (account) {
+        token.email = user.email;
         token.accessToken = account.access_token;
         token.id = user?.id;
         //@ts-ignore
@@ -95,14 +110,46 @@ export const options: NextAuthOptions = {
         token.key = user.key;
       }
       return token
-      
+
     },
     session({ session, token, user }) {
+      console.log('session');
+      console.dir({
+        session, token, user
+      })
       session.user.id = token.id;
       session.user.role = token.role;
       session.user.key = token.key;
       return session;
     },
+    // async signIn({ user, account }) {
+    //   if (account?.provider === 'github') {
+    //     const { name, email } = user;
+
+    //     if (name && email) {
+    //       const existingUser: User | null = await prisma.user.findUnique({
+    //         where: {
+    //           email
+    //         }
+    //       });
+
+    //       if (existingUser !== null) {
+    //         return true;
+    //       }
+
+    //       await prisma.user.create({
+    //         data: {
+    //           name,
+    //           key: nameToKey(name),
+    //           email,
+    //           password: hashPassword(email + process.env.NEXTAUTH_SECRET)
+    //         }
+    //       })
+    //     }
+    //   }
+
+    //   return true;
+    // }
   },
   adapter: PrismaAdapter(prisma),
   session: {
