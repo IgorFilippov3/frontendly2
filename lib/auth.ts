@@ -95,11 +95,6 @@ export const options: NextAuthOptions = {
   },
   callbacks: {
     jwt({ token, account, user }) {
-      console.log('jwt');
-      console.dir({
-        token, account, user
-      })
-
       if (account) {
         token.email = user.email;
         token.accessToken = account.access_token;
@@ -113,43 +108,13 @@ export const options: NextAuthOptions = {
 
     },
     session({ session, token, user }) {
-      console.log('session');
-      console.dir({
-        session, token, user
-      })
       session.user.id = token.id;
       session.user.role = token.role;
       session.user.key = token.key;
+      //@ts-ignore
+      session.accessToken = token.accessToken;
       return session;
     },
-    // async signIn({ user, account }) {
-    //   if (account?.provider === 'github') {
-    //     const { name, email } = user;
-
-    //     if (name && email) {
-    //       const existingUser: User | null = await prisma.user.findUnique({
-    //         where: {
-    //           email
-    //         }
-    //       });
-
-    //       if (existingUser !== null) {
-    //         return true;
-    //       }
-
-    //       await prisma.user.create({
-    //         data: {
-    //           name,
-    //           key: nameToKey(name),
-    //           email,
-    //           password: hashPassword(email + process.env.NEXTAUTH_SECRET)
-    //         }
-    //       })
-    //     }
-    //   }
-
-    //   return true;
-    // }
   },
   adapter: PrismaAdapter(prisma),
   session: {
