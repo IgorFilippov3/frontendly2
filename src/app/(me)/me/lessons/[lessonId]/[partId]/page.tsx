@@ -1,5 +1,5 @@
 import { MePart } from "@/_core/components/me/part/part";
-import { Part } from "@/_core/models/part/part.model";
+import type { Metadata } from 'next';
 
 interface MePartPageProps {
   params: {
@@ -11,13 +11,8 @@ interface MePartPageProps {
   }
 }
 
-export async function generateMetadata({ params }: MePartPageProps) {
-  const res = await fetch(process.env.URL + `/api/part/${params.partId}`)
-  const part: Part = await res.json();
-
-  return {
-    title: `Me | Part: ${part.name}`
-  }
+export const metadata: Metadata = {
+  title: 'Me | Part',
 }
 
 export default function MePartPage({ params, searchParams }: MePartPageProps) {

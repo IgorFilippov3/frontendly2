@@ -3,8 +3,11 @@
 import { Part } from "@/_core/models/part/part.model";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { Button, Typography, styled } from '@mui/material';
-import MDEditor from '@uiw/react-md-editor';
+import { Button, Typography } from '@mui/material';
+
+import MarkdownIt from 'markdown-it';
+import MdEditor from 'react-markdown-editor-lite';
+import 'react-markdown-editor-lite/lib/index.css';
 
 import styles from './part.module.css';
 import { MeFilesList } from "../files-list/files-list";
@@ -18,6 +21,9 @@ interface MePartProps {
   lessonId: string;
   partId: string;
 }
+
+const mdParser = new MarkdownIt();
+
 
 export const MePart = ({ lesssonKey, lessonId, partId }: MePartProps) => {
   const { data } = useSession();
@@ -35,9 +41,12 @@ export const MePart = ({ lesssonKey, lessonId, partId }: MePartProps) => {
   const fetchPart = async (partId: string) => {
     try {
       const res = await fetch(`/api/part/${partId}?relation=parts`);
-      const part: Part = await res.json();
-      setPart(part);
-      setTask(part.taskMarkdown);
+
+      if (res.ok) {
+        const part: Part = await res.json();
+        setPart(part);
+        setTask(part.taskMarkdown);
+      }
     } catch (e) {
       console.error(e);
     }
@@ -135,6 +144,13 @@ export const MePart = ({ lesssonKey, lessonId, partId }: MePartProps) => {
     );
   }
 
+  const handleChangeMarkdown = ({ text, html }: {
+    text: string;
+    html: string;
+  }) => {
+    setTask(text);
+  }
+
   if (!part) return <span>Loading...</span>;
 
   return (
@@ -146,15 +162,14 @@ export const MePart = ({ lesssonKey, lessonId, partId }: MePartProps) => {
         </Typography>
         <br />
         <div className={styles.editor}>
-          <MDEditor
-            commands={[]}
-            autoFocus={true}
-            height="100%"
-            textareaProps={{
-              placeholder: "Write your tutorial here..."
-            }}
-            value={task}
-            onChange={(value) => setTask(value || '')}
+          {/* <MDEditor
+            
+          /> */}
+          <MdEditor
+            style={{ height: '100%' }}
+            value={task || ''}
+            renderHTML={text => mdParser.render(text)}
+            onChange={value => handleChangeMarkdown(value)}
           />
         </div>
         <br />

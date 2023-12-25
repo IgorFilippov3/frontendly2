@@ -1,24 +1,26 @@
-import { getQueryParameter } from "@/_core/utils/get-query-param";
+import prisma from "@lib/prisma";
 import { nameToKey } from "@/_core/utils/name-to-key";
 import { options } from "@lib/auth";
-import prisma from "@lib/prisma";
-import { getServerSession } from "next-auth";
+import { UserRole } from "@prisma/client";
+import { Session, getServerSession } from "next-auth";
 
-export async function GET(
-  req: Request
-) {
-  const mode: string | null = getQueryParameter(req.url, 'mode');
+export async function GET() {
+  const session: Session | null = await getServerSession(options);
+  if (!session) {
+    return Response.json('Forbidden', { status: 403 });
+  }
 
-  if (mode !== null && mode === 'admin') {
+  const role: UserRole = session.user.role;
+
+  if (role === 'admin') {
     const lessons = await prisma.lesson.findMany();
     return Response.json(lessons);
   }
 
   try {
-    const session = await getServerSession(options);
     const lessons = await prisma.lesson.findMany({
       where: {
-        userId: parseInt(session!.user.id),
+        userId: parseInt(session.user.id),
       }
     });
     return Response.json(lessons);

@@ -34,11 +34,14 @@ export const MeLesson = ({ lessonId }: MeLessonProps) => {
   const fetchLesson = async (lessonId: string) => {
     try {
       const res = await fetch(`/api/lessons/${lessonId}?relation=parts`);
-      const lesson: Lesson = await res.json();
-      setLesson(lesson);
-      setPosterImage(lesson.posterImage || '');
-      setPublished(lesson.published);
-      setReadyToPublish(lesson.readyToPublish);
+
+      if (res.ok) {
+        const lesson: Lesson = await res.json();
+        setLesson(lesson);
+        setPosterImage(lesson.posterImage || '');
+        setPublished(lesson.published);
+        setReadyToPublish(lesson.readyToPublish);
+      }
     } catch (e) {
       console.error(e);
     }

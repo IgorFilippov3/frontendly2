@@ -31,7 +31,7 @@ export const MeLessonsList = () => {
 
   const fetchLessons = async (mode: UserRole) => {
     try {
-      const response = await fetch(`/api/lessons?mode=${mode}`);
+      const response = await fetch(`/api/lessons`);
       const lessons: Lesson[] = await response.json();
 
       setLessons(lessons.sort(sortByPublished));

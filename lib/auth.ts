@@ -111,8 +111,6 @@ export const options: NextAuthOptions = {
       session.user.id = token.id;
       session.user.role = token.role;
       session.user.key = token.key;
-      //@ts-ignore
-      session.accessToken = token.accessToken;
       return session;
     },
   },
