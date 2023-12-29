@@ -1,10 +1,14 @@
 
+import { GENERAL_SEO_INFO, OPEN_GRAPH, TWITTER } from '@/_core/catalogs/seo';
 import { LessonsList } from '@/_core/components/site/lessons-list/lessons-list';
 import { Lesson } from '@/_core/models/lesson/lesson.model';
 import type { Metadata } from 'next';
 
+
 export const metadata: Metadata = {
-  title: 'Frontendly',
+  ...GENERAL_SEO_INFO,
+  openGraph: OPEN_GRAPH,
+  twitter: TWITTER
 }
 
 export default async function SiteMain() {

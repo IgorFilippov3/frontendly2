@@ -16,9 +16,6 @@ export const LessonsList = ({ lessons }: LessonsListProps) => {
 
   if (!lessons) return <span>Loading...</span>;
 
-  console.clear();
-  console.log(lessons, 'lessons');
-
   return (
     <section className={styles.list}>
       {renderLessons(lessons)}
