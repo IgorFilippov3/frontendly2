@@ -35,7 +35,7 @@ export const MeHeader = () => {
             </Link>
           </div>
           <div style={{ marginRight: 12 }}>
-            <Link href="https://discord.gg/DattynRJ" passHref>
+            <Link href="https://discord.gg/rKj52JdS3z" passHref>
               <Button className={link}>Discord</Button>
             </Link>
           </div>

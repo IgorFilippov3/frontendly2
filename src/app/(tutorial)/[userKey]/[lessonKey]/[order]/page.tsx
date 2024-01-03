@@ -1,7 +1,9 @@
 import { GENERAL_SEO_INFO, OPEN_GRAPH, TWITTER } from "@/_core/catalogs/seo";
+import { LessonPartMobile } from "@/_core/components/part-mobile/part-mobile";
 import { LessonPart } from "@/_core/components/part/part";
 import { LessonPartData } from "@/_core/models/lesson/lesson-part-data.model";
 import { Lesson } from "@/_core/models/lesson/lesson.model";
+import { getIsMobile } from "@/_core/utils/get-is-mobile";
 import { Metadata } from "next";
 
 interface PartPageProps {
@@ -40,8 +42,9 @@ function buildPageMetadata(lesson: Lesson): Metadata {
   }
 }
 
-export default async function PartPage({ params }: PartPageProps) {
-  const { userKey, lessonKey, order } = params;
+export default async function PartPage(props: PartPageProps) {
+  const { userKey, lessonKey, order } = props.params;
+  const isMobile = getIsMobile();
 
   try {
     const res = await fetch(process.env.URL + `/api/tutorial`, {
@@ -55,7 +58,9 @@ export default async function PartPage({ params }: PartPageProps) {
 
     const data: LessonPartData = await res.json();
 
-    return <LessonPart data={data} userKey={userKey} />;
+    return isMobile 
+      ? <LessonPartMobile data={data} /> 
+      : <LessonPart data={data} userKey={userKey} />;
 
   } catch (e: any) {
     return <span>{e.message}</span>
