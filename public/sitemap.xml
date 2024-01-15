@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://frontendly.dev/</loc>
+  </url>
+
+  <url>
+    <loc>https://frontendly.dev/sitemap-build-a-crud-app-in-react-with-tanstack-query-and-material-ui.xml</loc>
+  </url>
+
+  <url>
+    <loc>https://frontendly.dev/sitemap-react-tutorial-tictactoe.xml</loc>
+  </url>
+
+  <url>
+    <loc>https://frontendly.dev/sitemap-skeleton-screen-loading-animation-using-html-css.xml</loc>
+  </url>
+
+  <url>
+    <loc>https://frontendly.dev/sitemap-react-hooks-lift-up-pass-down-state-using-usecontext-and-usereducer.xml</loc>
+  </url>
+
+  <url>
+    <loc>https://frontendly.dev/sitemap-react-patterns-in-action.xml</loc>
+  </url>
+
+</urlset>
